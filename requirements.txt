@@ -1,3 +1,4 @@
 pyyaml
 dateparser
 feedparser
+requests
