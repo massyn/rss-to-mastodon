@@ -16,8 +16,7 @@ def post_mastodon(msg,cfg):
         f"{cfg['endpoint']}/api/v1/statuses",
         data={'status': msg},
         headers={
-            'Authorization': f"Bearer {os.environ['MASTODON_ACCESS_TOKEN']}",
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+            'Authorization': f"Bearer {os.environ['MASTODON_ACCESS_TOKEN']}"
             }
         )
     
@@ -34,7 +33,7 @@ def main(c):
             print(f"rss => {rss}")
 
             try:
-                feed = feedparser.parse(rss)
+                feed = feedparser.parse(rss, agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3')
             except:
                 feed = []
 
