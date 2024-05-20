@@ -35,7 +35,7 @@ def main(c):
             try:
                 feed = feedparser.parse(rss, agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3')
             except:
-                feed = []
+                feed = {}
 
             for f in feed.get('entries',[]):
                 if (datetime.datetime.now(datetime.timezone.utc) - dateparser.parse(f['published'])) <= datetime.timedelta(hours=1):
