@@ -1,0 +1,5 @@
+mastodon:
+  endpoint: https://infosec.exchange
+rss:
+  - https://aws.amazon.com/security/security-bulletins/rss/feed/
+  - https://techcrunch.com/category/security/feed/
