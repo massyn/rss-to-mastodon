@@ -1,5 +1,7 @@
 rss:
   - https://aws.amazon.com/security/security-bulletins/rss/feed/
+  - https://azurecomcdn.azureedge.net/en-us/updates/feed/?query=security
+  - https://cloudblog.withgoogle.com/topics/threat-intelligence/rss/
   - https://techcrunch.com/category/security/feed/
   - https://alas.aws.amazon.com/alas.rss
   - https://www.cyber.gov.au/rss/alerts
