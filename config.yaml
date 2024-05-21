@@ -5,4 +5,7 @@ rss:
   - https://techcrunch.com/category/security/feed/
   - https://alas.aws.amazon.com/alas.rss
   - https://www.cyber.gov.au/rss/alerts
+  - https://krebsonsecurity.com/feed/
+  - https://feeds.feedburner.com/TheHackersNews
+  - https://www.itnews.com.au/RSS/rss.ashx?type=Category&ID=32
   #- https://www.nist.gov/news-events/cybersecurity/rss.xml
