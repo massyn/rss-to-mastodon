@@ -64,6 +64,8 @@ def main(c):
             except:
                 feed = {}
 
+            print(f"- Found {len(feed.get('entries',[]))} items...")
+
             for f in feed.get('entries',[]):
                 #if (datetime.datetime.now(datetime.timezone.utc) - dateparser.parse(f['published'])) <= datetime.timedelta(hours=1):
                 if dateparser.parse(f['published']) >= latest:
