@@ -9,7 +9,7 @@ import os
 TAG_RE = re.compile(r'<[^>]+>')
 
 def log(txt):
-    ts = datetime.datetime.now(datetime.UTC).strftime('%Y-%m-%d %H:%M:%S')
+    ts = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
     print(f"{ts} - {txt}")
 
 def remove_tags(text):
@@ -42,7 +42,7 @@ def mastodon(action,msg = None):
                 }
             )
 
-        print(r.status_code)
+        log(r.status_code)
         if r.status_code >= 200 and r.status_code < 300:
             return r.json()
         else:
@@ -56,7 +56,7 @@ def main(c):
         mastodon('post','Welcome to the RSS Bot')
         exit(0)
 
-    latest = dateparser.parse(x[0]['created_at'],settings={'TO_TIMEZONE': 'UTC'})
+    latest = dateparser.parse(x[0]['created_at'],settings={'TIMEZONE': 'UTC', 'RETURN_AS_TIMEZONE_AWARE' : False})
     log(f"Latest timestamp from timeline is {latest}")
 
     with open(c,'rt') as y:
@@ -74,11 +74,11 @@ def main(c):
 
             for f in feed.get('entries',[]):
                 #if (datetime.datetime.now(datetime.timezone.utc) - dateparser.parse(f['published'])) <= datetime.timedelta(hours=1):
-                if dateparser.parse(f['published'],settings={'TO_TIMEZONE': 'UTC'}) >= latest:
+                if dateparser.parse(f['published'],settings={'TIMEZONE': 'UTC', 'RETURN_AS_TIMEZONE_AWARE' : False}) >= latest:
                     msg = f'''{feed['feed']['title']} - {f['title']})\n\n{remove_tags(f['summary'])}\n\n{f['link']}'''
                     mastodon('post',msg)
     
     log(" ** All done **")
-    
+
 if __name__=='__main__':
     main('config.yaml')
