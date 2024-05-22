@@ -15,8 +15,9 @@ This is a simple bot I created to read a number of RSS feeds, and publish the re
 
 ## Getting started
 
-Environment variables
+The [config.yaml](config.yaml) is split up in different sections, allowing the bot to post multiple feeds to multiple Mastodon channels.
 
-* `MASTODON_ENDPOINT`
-* `MASTODON_ACCESS_KEY`
+Environment variables `*_ENDPOINT` and `*_ACCESS_KEY` will be used.  Create a set for each section in the config file.
 
+* `{section}_ENDPOINT`
+* `{section}_ACCESS_KEY`

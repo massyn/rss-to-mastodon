@@ -6,8 +6,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
-      MASTODON_ENDPOINT: ${{ secrets.MASTODON_ENDPOINT }}
+      security_ACCESS_TOKEN: ${{ secrets.SECURITY_ACCESS_TOKEN }}
+      security_ENDPOINT: https://infosec.exchange
+      massyn_ACCESS_TOKEN: ${{ secrets.MASSYN_ACCESS_TOKEN }}
+      massyn_ENDPOINT: https://aus.social
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.10
