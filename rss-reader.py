@@ -68,7 +68,7 @@ def main(c):
 
             for f in feed.get('entries',[]):
                 #if (datetime.datetime.now(datetime.timezone.utc) - dateparser.parse(f['published'])) <= datetime.timedelta(hours=1):
-                if dateparser.parse(f['published']) >= latest:
+                if dateparser.parse(f['published'],ignoretz=True) >= latest:
                     msg = f'''{feed['feed']['title']} - {f['title']})\n\n{remove_tags(f['summary'])}\n\n{f['link']}'''
                     mastodon('post',msg)
 
