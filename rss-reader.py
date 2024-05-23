@@ -27,7 +27,13 @@ def main(c):
         log(f"Section ==> {section}")
         # -- we need our mastodon id, so lets set things up
 
-        # TODO - what if the tokens are expired - will everything crash?
+        if not os.environ.get(f"{section}_ENDPOINT"):
+            log(f"ERROR - Environment variable {section}_ENDPOINT is not set.")
+            continue
+        if not os.environ.get(f"{section}_ACCESS_TOKEN"):
+            log(f"ERROR - Environment variable {section}_ACCESS_TOKEN is not set.")
+            continue
+
         mastodon = Mastodon(
             api_base_url = os.environ[f"{section}_ENDPOINT"],
             access_token = os.environ[f"{section}_ACCESS_TOKEN"]
@@ -55,7 +61,8 @@ def main(c):
                     log(f" - {section} - rss => {rss}")
 
                     try:
-                        feed = feedparser.parse(rss)
+                        # Some sites are blocking us.  Not sure why -- it's RSS!  It's supposed to be scraped...
+                        feed = feedparser.parse(rss, agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3')
                     except:
                         feed = {}
                     log(f" - {section} -     => Found {len(feed.get('entries',[]))} items...")
