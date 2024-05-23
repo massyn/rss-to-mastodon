@@ -1,4 +1,4 @@
 pyyaml
 dateparser
 feedparser
-requests
+Mastodon.py
