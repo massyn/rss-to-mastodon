@@ -77,7 +77,7 @@ def main(c):
                         if published_date > latest:
                             log(f" - {section} -     => Posting - {f['title']}")
                             msg = f'''{feed['feed']['title']} - {f['title']})\n\n{remove_tags(f['summary'])}\n\n{f['link']}'''
-                            mastodon.status_post(msg)
+                            mastodon.status_post(msg[:10000])
 
     log(" ** All done **")
 
