@@ -8,6 +8,7 @@ security:
   - https://feeds.feedburner.com/TheHackersNews
   - https://www.itnews.com.au/RSS/rss.ashx?type=Category&ID=32
   - https://www.tenable.com/blog/cyber-exposure-alerts/feed
+  - https://www.securityweek.com/feed/
   #- https://www.nist.gov/news-events/cybersecurity/rss.xml
   #- https://azurecomcdn.azureedge.net/en-us/updates/feed/?query=security
 massyn:
