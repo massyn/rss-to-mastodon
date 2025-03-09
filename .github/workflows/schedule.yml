@@ -28,4 +28,15 @@ jobs:
     - name: Publish
       run: |
         python rss-reader.py
+  notify-on-failure:
+    if: failure()
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Slack Failure Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_MESSAGE: "🚨 *Build Failed!* ❌\n*Repo:* ${{ github.repository }}\n*Branch:* ${{ github.ref }}\n*Commit:* ${{ github.sha }}"
+          SLACK_COLOR: "#FF0000"
     
