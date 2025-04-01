@@ -18,8 +18,8 @@ security:
   - https://www.cisa.gov/uscert/ncas/alerts.xml
   - https://www.ncsc.gov.uk/api/1/services/v1/report-rss-feed.xml
   - https://redcanary.com/feed/
-  - https://isc.sans.edu/rssfeed.xml
   - https://securityboulevard.com/feed/
+  #- https://isc.sans.edu/rssfeed.xml
   #- https://www.nist.gov/news-events/cybersecurity/rss.xml
   #- https://azurecomcdn.azureedge.net/en-us/updates/feed/?query=security
 # massyn:
