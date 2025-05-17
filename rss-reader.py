@@ -73,14 +73,17 @@ def main(c):
                     # check on the automated posted items. When posting manual messages, that could cause
                     # the bot not to publish anything, since the timestamp has changed.
                     for f in feed.get('entries',[]):
-                        published_date = dateparser.parse(f['published'],settings={'TIMEZONE': 'UTC', 'RETURN_AS_TIMEZONE_AWARE' : True})
-                        if published_date > latest:
-                            if 'summary' in f:
-                                log(f" - {section} -     => Posting - {f['title']}")
-                                msg = f'''{feed['feed']['title']} - {f['title']})\n\n{remove_tags(f['summary'])}\n\n{f['link']}'''
-                                mastodon.status_post(msg[:10000])
-                            else:
-                                log(f" -- something weird - we are missing summary, so we'll skip it")
+                        if 'published' in f:
+                            published_date = dateparser.parse(f['published'],settings={'TIMEZONE': 'UTC', 'RETURN_AS_TIMEZONE_AWARE' : True})
+                            if published_date > latest:
+                                if 'summary' in f:
+                                    log(f" - {section} -     => Posting - {f['title']}")
+                                    msg = f'''{feed['feed']['title']} - {f['title']})\n\n{remove_tags(f['summary'])}\n\n{f['link']}'''
+                                    mastodon.status_post(msg[:10000])
+                                else:
+                                    log(f" -- something weird - we are missing summary, so we'll skip it")
+                        else:
+                            log(f" -- something weird - we are missing published, so we'll skip it")
 
     log(" ** All done **")
 
