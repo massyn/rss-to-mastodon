@@ -75,7 +75,7 @@ def main(c):
         except:
             logging.error("Something is wrong with the credentials.. Skipping...")
             me = {}
-        me = {}
+
         if me.get('id'):
             logging.info(f" - id = {me.get('display_name')} ({me.get('id')})")
             
