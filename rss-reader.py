@@ -94,9 +94,17 @@ def main(c):
 
                     feed = read_rss(rss)
                     content = filter_rss(feed,latest)
-                    for i in content:
-                        logging.info(f" - {section} -     => Posting - {i['feed_title']}")
-                        msg = f'''{i['feed_title']} - {i['title']})\n\n{f['summary']}\n\n{i['link']}'''
+                    if len(content) < 5:
+                        for i in content:
+                            logging.info(f" - {section} -     => Posting - {i['feed_title']}")
+                            msg = f'''{i['feed_title']} - {i['title']}\n\n{f['summary']}\n\n{i['link']}'''
+                            mastodon.status_post(msg[:10000])
+                    else:
+                        logging.info(f" - {section} -     => Posting Digest")
+                        msg = "Digest of security news:\n\n"
+
+                        for i in content:
+                            msg += f'''* <a href="{i['link']}">{i['feed_title']} - {i['title']}</a>\n'''
                         mastodon.status_post(msg[:10000])
 
     logging.info(" ** All done **")
