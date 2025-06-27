@@ -32,17 +32,18 @@ def read_rss(feed):
 
 def filter_rss(feed,latest):
     data = []
-    for f in feed.get('entries',[]):
-        if 'published' in f and 'summary' in f:
-            published_date = dateparser.parse(f['published'],settings={'TIMEZONE': 'UTC', 'RETURN_AS_TIMEZONE_AWARE' : True})
-            if published_date > latest:
-                data.append({
-                    'feed_title'        : f['feed']['title'],
-                    'published_date'    : published_date,
-                    'title'             : f['title'],
-                    'summary'           : re.compile(r'<[^>]+>').sub('', f['summary']),
-                    'link'              : f['link']
-                })
+    if feed != None:
+        for f in feed.get('entries',[]):
+            if 'published' in f and 'summary' in f:
+                published_date = dateparser.parse(f['published'],settings={'TIMEZONE': 'UTC', 'RETURN_AS_TIMEZONE_AWARE' : True})
+                if published_date > latest:
+                    data.append({
+                        'feed_title'        : f['feed']['title'],
+                        'published_date'    : published_date,
+                        'title'             : f['title'],
+                        'summary'           : re.compile(r'<[^>]+>').sub('', f['summary']),
+                        'link'              : f['link']
+                    })
     return data
             
 def main(c):
