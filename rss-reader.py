@@ -38,14 +38,47 @@ def filter_rss(feed,latest):
                 published_date = dateparser.parse(f['published'],settings={'TIMEZONE': 'UTC', 'RETURN_AS_TIMEZONE_AWARE' : True})
                 if published_date > latest:
                     data.append({
-                        'feed_title'        : f['feed']['title'],
+                        'feed_title'        : feed.get('feed',{}).get('title','No title'),
                         'published_date'    : published_date,
                         'title'             : f['title'],
                         'summary'           : re.compile(r'<[^>]+>').sub('', f['summary']),
                         'link'              : f['link']
                     })
     return data
-            
+
+def test(c):
+    # Read the configuration
+    try:
+        with open(c,'rt') as y:
+            cfg = yaml.safe_load(y)        
+    except:
+        logging.error(f"Could not read {c} - ending...")
+        exit(1)
+
+    # Loop through each of the sections
+    for section in cfg:
+        logging.info(f"Section ==> {section}")
+        # -- read through each of the RSS feeds
+        content = []
+        for rss in cfg[section]:
+            logging.info(f" - {section} - rss => {rss}")
+
+            feed = read_rss(rss)
+            content += filter_rss(feed, datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=3))
+
+        if len(content) < 5:
+            for i in content:
+                logging.info(f" - {section} -     => Posting - {i['feed_title']}")
+                msg = f'''{i['feed_title']} - {i['title']}\n\n{i['summary']}\n\n{i['link']}'''
+                print(msg)
+        else:
+            logging.info(f" - {section} -     => Posting Digest")
+            msg = "Digest of security news:\n\n"
+
+            for i in content:
+                msg += f'''* <a href="{i['link']}">{i['feed_title']} - {i['title']}</a>\n'''
+            print(msg)
+
 def main(c):
     # Read the configuration
     try:
@@ -90,25 +123,27 @@ def main(c):
                 logging.info(f" - {section} - Latest timestamp from timeline is {latest}")
 
                 # -- read through each of the RSS feeds
+                content = []
                 for rss in cfg[section]:
                     logging.info(f" - {section} - rss => {rss}")
 
                     feed = read_rss(rss)
-                    content = filter_rss(feed,latest)
-                    if len(content) < 5:
-                        for i in content:
-                            logging.info(f" - {section} -     => Posting - {i['feed_title']}")
-                            msg = f'''{i['feed_title']} - {i['title']}\n\n{f['summary']}\n\n{i['link']}'''
-                            mastodon.status_post(msg[:10000])
-                    else:
-                        logging.info(f" - {section} -     => Posting Digest")
-                        msg = "Digest of security news:\n\n"
-
-                        for i in content:
-                            msg += f'''* <a href="{i['link']}">{i['feed_title']} - {i['title']}</a>\n'''
+                    content += filter_rss(feed,latest)
+                if len(content) < 5:
+                    for i in content:
+                        logging.info(f" - {section} -     => Posting - {i['feed_title']}")
+                        msg = f'''{i['feed_title']} - {i['title']}\n\n{i['summary']}\n\n{i['link']}'''
                         mastodon.status_post(msg[:10000])
+                else:
+                    logging.info(f" - {section} -     => Posting Digest")
+                    msg = "Digest of security news:\n\n"
+
+                    for i in content:
+                        msg += f'''* <a href="{i['link']}">{i['feed_title']} - {i['title']}</a>\n'''
+                    mastodon.status_post(msg[:10000])
 
     logging.info(" ** All done **")
 
 if __name__=='__main__':
     main('config.yaml')
+    #test('config.yaml')
