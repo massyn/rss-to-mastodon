@@ -1,9 +1,7 @@
 name: Python application
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  # push:
+  #   branches: [ "main" ]
   workflow_dispatch:
   schedule:
   - cron: '0 0,4,8,12,16,20 * * *'
@@ -16,6 +14,7 @@ jobs:
       security_ENDPOINT: https://infosec.exchange
       massyn_ACCESS_TOKEN: ${{ secrets.MASSYN_ACCESS_TOKEN }}
       massyn_ENDPOINT: https://aus.social
+      HOSTCHECK: ${{ secrets.HOSTCHECK }}
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3
@@ -28,7 +27,7 @@ jobs:
         pip install -r requirements.txt
     - name: Publish
       run: |
-        python rss-reader.py
+        python rss-reader.py && curl -fsS -m 10 --retry 5 -o /dev/null $HOSTCHECK
   notify-on-failure:
     if: failure()
     needs: build
