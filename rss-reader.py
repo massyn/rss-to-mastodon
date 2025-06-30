@@ -139,7 +139,7 @@ def main(c):
                     msg = "Digest of security news:\n\n"
 
                     for i in content:
-                        msg += f'''* <a href="{i['link']}">{i['feed_title']} - {i['title']}</a>\n'''
+                        msg += f'''{i['feed_title']} - {i['title']}\n{i['link']}\n\n'''
                     mastodon.status_post(msg[:10000])
 
     logging.info(" ** All done **")
