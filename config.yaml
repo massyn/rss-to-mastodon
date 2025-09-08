@@ -21,6 +21,6 @@ security:
   - https://securityboulevard.com/feed/
   #- https://isc.sans.edu/rssfeed.xml
   #- https://www.nist.gov/news-events/cybersecurity/rss.xml
-  #- https://azurecomcdn.azureedge.net/en-us/updates/feed/?query=security
+  #- https://azurecomcdn.azureedge.net/en-us/updates/feed/?query=security 
 # massyn:
 #   - https://massyn.net/rss.xml
