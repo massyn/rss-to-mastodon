@@ -19,6 +19,7 @@ security:
   - https://www.ncsc.gov.uk/api/1/services/v1/report-rss-feed.xml
   - https://redcanary.com/feed/
   - https://securityboulevard.com/feed/
+  - https://haveibeenpwned.com/feed/breaches/
   #- https://isc.sans.edu/rssfeed.xml
   #- https://www.nist.gov/news-events/cybersecurity/rss.xml
   #- https://azurecomcdn.azureedge.net/en-us/updates/feed/?query=security 
