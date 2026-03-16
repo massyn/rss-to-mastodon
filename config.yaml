@@ -24,4 +24,4 @@ security:
   #- https://www.nist.gov/news-events/cybersecurity/rss.xml
   #- https://azurecomcdn.azureedge.net/en-us/updates/feed/?query=security 
 # massyn:
-#   - https://massyn.net/rss.xml
+#    - https://massyn.net/rss.xml
