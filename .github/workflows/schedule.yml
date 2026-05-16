@@ -9,6 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: write
     env:
       security_ACCESS_TOKEN: ${{ secrets.SECURITY_ACCESS_TOKEN }}
       security_ENDPOINT: https://infosec.exchange
@@ -28,6 +30,14 @@ jobs:
     - name: Publish
       run: |
         python rss-reader.py && curl -fsS -m 10 --retry 5 -o /dev/null $HOSTCHECK
+    - name: Keep-alive commit
+      run: |
+        date -u > _last_run.txt
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add _last_run.txt
+        git commit -m "chore: keep-alive [skip ci]"
+        git push
   notify-on-failure:
     if: failure()
     needs: build
